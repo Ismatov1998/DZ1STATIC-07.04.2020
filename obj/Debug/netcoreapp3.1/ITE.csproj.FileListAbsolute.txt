@@ -1,0 +1,11 @@
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\ITE.exe
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\ITE.deps.json
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\ITE.runtimeconfig.json
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\ITE.runtimeconfig.dev.json
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\ITE.dll
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\ITE.pdb
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.csprojAssemblyReference.cache
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.AssemblyInfoInputs.cache
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.AssemblyInfo.cs
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.dll
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.pdb
