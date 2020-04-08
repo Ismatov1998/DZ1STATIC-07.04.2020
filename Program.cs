@@ -34,7 +34,31 @@ namespace project30
           ArrayHelp.Push(ref arrfloat1, 45f);
           ArrayHelp.Push(ref arrdecimal1, 26M);
 
+        int[] arrint2=new int[10]{11,21,31,41,51,81,25,64,93,10};
+        string[] arrstring2=new string[10]{"18","25","32","46","57","83","29","67","94","102"};
+        double[] arrdouble2=new double[10]{13,25,36,48,54,81,22,63,98,106};
+        float[] arrfloat2=new float[10]{1f,2f,3f,4f,5f,8f,2f,6f,9f,10f};
+        decimal[] arrdecimal2=new decimal[10]{12M,25M,38M,42M,54M,86M,26M,64M,94M,108M}; 
+
+          ArrayHelp.Shift(ref arrint2);
+          ArrayHelp.Shift(ref arrstring2);
+          ArrayHelp.Shift(ref arrdouble2);
+          ArrayHelp.Shift(ref arrfloat2);
+          ArrayHelp.Shift(ref arrdecimal2);
+
+        int[] arrint3=new int[10]{11,21,31,41,51,81,25,64,93,10};
+        string[] arrstring3=new string[10]{"18","25","32","46","57","83","29","67","94","102"};
+        double[] arrdouble3=new double[10]{13,25,36,48,54,81,22,63,98,106};
+        float[] arrfloat3=new float[10]{1f,2f,3f,4f,5f,8f,2f,6f,9f,10f};
+        decimal[] arrdecimal3=new decimal[10]{1M,2M,3M,4M,5M,8M,2M,6M,9M,10M}; 
+
+          ArrayHelp.UnShift(ref arrint3,12);
+          ArrayHelp.UnShift(ref arrstring3,"23");
+          ArrayHelp.UnShift(ref arrdouble3,89);
+          ArrayHelp.UnShift(ref arrfloat3,74f);
+          ArrayHelp.UnShift(ref arrdecimal3,42M);    
         
+
         } 
 
         public static class ArrayHelp
@@ -226,7 +250,150 @@ namespace project30
             return n+1; 
         }   
          
-       
+        public static int Shift(ref int[] arrint)
+        {
+            Console.WriteLine("Задания N-1.3.1");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrint);
+          int n=arrint.Length,a=arrint[0];
+          Array.Reverse(arrint);
+          Array.Resize(ref arrint, n-1);
+          Array.Reverse(arrint);
+          Console.WriteLine("Массив после изменения ");
+          getinfo(arrint);
+          return a;
+
+        }
+         public static string Shift(ref string[] arrstring)
+        {
+             Console.WriteLine("Задания N-1.3.2");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrstring);
+          int n=arrstring.Length;
+          string a=arrstring[0];
+          Array.Reverse(arrstring);
+          Array.Resize(ref arrstring, n-1);
+          Array.Reverse(arrstring);
+          Console.WriteLine("Массив после изменения ");
+          getinfo(arrstring);
+          return a;
+        }
+        public static double Shift(ref double[] arrdouble)
+        {
+             Console.WriteLine("Задания N-1.3.3");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrdouble);
+          int n=arrdouble.Length;
+          double a=arrdouble[0];
+          Array.Reverse(arrdouble);
+          Array.Resize(ref arrdouble, n-1);
+          Array.Reverse(arrdouble);
+          Console.WriteLine("Массив после изменения ");
+          getinfo(arrdouble);
+          return a;
+
+        }
+        public static float Shift(ref float[] arrfloat)
+        {
+             Console.WriteLine("Задания N-1.3.4");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrfloat);
+          int n=arrfloat.Length;
+          float a=arrfloat[0];
+          Array.Reverse(arrfloat);
+          Array.Resize(ref arrfloat, n-1);
+          Array.Reverse(arrfloat);
+          Console.WriteLine("Массив после изменения ");
+          getinfo(arrfloat);
+          return a;
+
+        }
+        public static decimal Shift(ref decimal[] arrdecimal)
+        {
+             Console.WriteLine("Задания N-1.3.5");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrdecimal);
+          int n=arrdecimal.Length;
+          decimal a=arrdecimal[0];
+          Array.Reverse(arrdecimal);
+          Array.Resize(ref arrdecimal, n-1);
+          Array.Reverse(arrdecimal);
+          Console.WriteLine("Массив после изменения ");
+          getinfo(arrdecimal);
+          return a;
+
+        }
+ 
+         public static int UnShift(ref int[] arrint, int element)
+         {
+              Console.WriteLine("Задания N-1.4.1");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrint);
+           int n=arrint.Length;
+           Array.Reverse(arrint);
+           Array.Resize(ref arrint,n+1);
+           arrint[n]=element;
+           Array.Reverse(arrint);
+           Console.WriteLine("Массив после изменения ");
+           getinfo(arrint);
+           return n+1;
+        }
+        public static int UnShift(ref string[] arrstring, string element)
+         {
+              Console.WriteLine("Задания N-1.4.2");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrstring);
+           int n=arrstring.Length;
+           Array.Reverse(arrstring);
+           Array.Resize(ref arrstring,n+1);
+           arrstring[n]=element;
+           Array.Reverse(arrstring);
+           Console.WriteLine("Массив после изменения ");
+           getinfo(arrstring);
+           return n+1;
+        }
+        public static int UnShift(ref double[] arrdouble, double element)
+         {
+              Console.WriteLine("Задания N-1.4.3");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrdouble);
+           int n=arrdouble.Length;
+           Array.Reverse(arrdouble);
+           Array.Resize(ref arrdouble,n+1);
+           arrdouble[n]=element;
+           Array.Reverse(arrdouble);
+           Console.WriteLine("Массив после изменения ");
+           getinfo(arrdouble);
+           return n+1;
+        }
+        public static int UnShift(ref float[] arrfloat, float element)
+         {
+              Console.WriteLine("Задания N-1.4.4");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrfloat);
+           int n=arrfloat.Length;
+           Array.Reverse(arrfloat);
+           Array.Resize(ref arrfloat,n+1);
+           arrfloat[n]=element;
+           Array.Reverse(arrfloat);
+           Console.WriteLine("Массив после изменения ");
+           getinfo(arrfloat);
+           return n+1;
+        }
+      public static int UnShift(ref decimal[] arrdecimal, decimal element)
+         {
+              Console.WriteLine("Задания N-1.4.5");
+            Console.WriteLine("Массив до изменения ");
+            getinfo(arrdecimal);
+           int n=arrdecimal.Length;
+           Array.Reverse(arrdecimal);
+           Array.Resize(ref arrdecimal,n+1);
+           arrdecimal[n]=element;
+           Array.Reverse(arrdecimal);
+           Console.WriteLine("Массив после изменения ");
+           getinfo(arrdecimal);
+           return n+1;
+        }
         
          public static void getinfo(int[] arr)
           {
