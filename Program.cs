@@ -1,447 +1,307 @@
 ﻿using System;
-
-
-namespace project30
-
+using System.Data.SqlClient;
+using System.Data;
+namespace ERT
 {
     class Program
     {
-        static void Main(string[] args)
+         static void Main(string[] args)
+
         {
+        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+        
+        Console.WriteLine(@"
+Если вы уже регистрированый в приложении введите 1:
+иначе чтобы регистрироваться введите 2");
 
-        int[] arrint=new int[10]{1,2,3,4,5,8,2,6,9,10};
-        string[] arrstring=new string[10]{"11","21","32","4","55","8","20","60","90","103"};
-        double[] arrdouble=new double[10]{13,22,35,4,54,88,28,67,99,10};
-        float[] arrfloat=new float[10]{15f,26f,38f,47f,58f,86f,26f,64f,92f,103f};
-        decimal[] arrdecimal=new decimal[10]{15M,25M,34M,42M,50M,8M,2M,6M,9M,10M};
+           int n=Convert.ToInt32(Console.ReadLine()),t=0;
+           if(n==1)
+           {
+           while(t!=1)
+           {
+            con.Open();
+            Console.WriteLine("Введите Login:");
+            string s=Console.ReadLine();
+            Console.WriteLine("Введите Parol:");
+            string s1=Console.ReadLine();
+            string selectParol="Select * from Registraciya";
+            SqlCommand commandText1=new SqlCommand(selectParol,con);
+            SqlDataReader reader=commandText1.ExecuteReader();
+            while(reader.Read())
+            {
+                
+             if(Convert.ToString(reader.GetValue("login"))==s && Convert.ToString(reader.GetValue("Parol"))==s1)
+             {
+              Console.WriteLine("Добро пожаловать в свой личный кабинет");
+              Console.WriteLine(@"Если хотите посмотреть свои заявки выводите 1
+              Если хотите подать заявку ");
 
-          ArrayHelp.Pop(ref arrint);
-          ArrayHelp.Pop(ref arrstring);
-          ArrayHelp.Pop(ref arrdouble);
-          ArrayHelp.Pop(ref arrfloat);
-          ArrayHelp.Pop(ref arrdecimal);
+              t=1;
+              Anceta();
+             }
+             
+            }
+            if(t==0)
+            {
+                Console.WriteLine("Вы неправильно ввели Parol или Login");
+            }
+            con.Close();
+           
+           }
+           }
+           if(n==2)
+           {
+               con.Open();
+               Registr();
+           }
 
-        int[] arrint1=new int[10]{11,21,31,41,51,81,25,64,93,10};
-        string[] arrstring1=new string[10]{"18","25","32","46","57","83","29","67","94","102"};
-        double[] arrdouble1=new double[10]{13,25,36,48,54,81,22,63,98,106};
-        float[] arrfloat1=new float[10]{1f,2f,3f,4f,5f,8f,2f,6f,9f,10f};
-        decimal[] arrdecimal1=new decimal[10]{1M,2M,3M,4M,5M,8M,2M,6M,9M,10M}; 
-
-
-          ArrayHelp.Push(ref arrint1, 45);
-          ArrayHelp.Push(ref arrstring1, "23" );
-          ArrayHelp.Push(ref arrdouble1, 45);
-          ArrayHelp.Push(ref arrfloat1, 45f);
-          ArrayHelp.Push(ref arrdecimal1, 26M);
-
-        int[] arrint2=new int[10]{11,21,31,41,51,81,25,64,93,10};
-        string[] arrstring2=new string[10]{"18","25","32","46","57","83","29","67","94","102"};
-        double[] arrdouble2=new double[10]{13,25,36,48,54,81,22,63,98,106};
-        float[] arrfloat2=new float[10]{1f,2f,3f,4f,5f,8f,2f,6f,9f,10f};
-        decimal[] arrdecimal2=new decimal[10]{12M,25M,38M,42M,54M,86M,26M,64M,94M,108M}; 
-
-          ArrayHelp.Shift(ref arrint2);
-          ArrayHelp.Shift(ref arrstring2);
-          ArrayHelp.Shift(ref arrdouble2);
-          ArrayHelp.Shift(ref arrfloat2);
-          ArrayHelp.Shift(ref arrdecimal2);
-
-        int[] arrint3=new int[10]{11,21,31,41,51,81,25,64,93,10};
-        string[] arrstring3=new string[10]{"18","25","32","46","57","83","29","67","94","102"};
-        double[] arrdouble3=new double[10]{13,25,36,48,54,81,22,63,98,106};
-        float[] arrfloat3=new float[10]{1f,2f,3f,4f,5f,8f,2f,6f,9f,10f};
-        decimal[] arrdecimal3=new decimal[10]{1M,2M,3M,4M,5M,8M,2M,6M,9M,10M}; 
-
-          ArrayHelp.UnShift(ref arrint3,12);
-          ArrayHelp.UnShift(ref arrstring3,"23");
-          ArrayHelp.UnShift(ref arrdouble3,89);
-          ArrayHelp.UnShift(ref arrfloat3,74f);
-          ArrayHelp.UnShift(ref arrdecimal3,42M);    
+        
+        
         
 
-        } 
+        }
 
-        public static class ArrayHelp
+
+
+
+        static void Registr()
         {
-         
-
-          public static int  Pop(ref int[] arrint)
-          {
-            
-            int n=arrint.Length,a;
-            
-            int [] arr2=new int[n-1];
-
-            for(int i=0;i<n-1;i++)
-            {
-                arr2[i]=arrint[i];
-            }
-            Console.WriteLine("Задания N-1.1.1");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrint);
-            
-            a=arrint[n-1];
-            arrint=arr2;
-            
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrint);
-            
-            return a;           
-          }
-          
-           public static string  Pop(ref string[] arrstring)
-          {
-            
-           
-            
-            int n=arrstring.Length;
-            string b;
-            string[] arr2=new string[n-1];
-
-            for(int i=0;i<n-1;i++)
-            {
-                arr2[i]=arrstring[i];
-            }
-            Console.WriteLine("Задания N-1.1.2");
-            Console.WriteLine("Массив до изменения ");
-            b=arrstring[n-1];
-            getinfo(arrstring);
-            arrstring=arr2;
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrstring);
-            return b;           
-          }
-           public static double  Pop(ref double[] arrdouble)
-          {
-            
-            int n=arrdouble.Length;
-            double b;
-            double[] arr2=new double[n-1];
-
-            for(int i=0;i<n-1;i++)
-            {
-                arr2[i]=arrdouble[i];
-            }
-            b=arrdouble[n-1];
-            Console.WriteLine("Задания N-1.1.3");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdouble);
-            arrdouble=arr2;
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrdouble);
-            return b;           
-          }
-           public static float Pop(ref float[] arrfloat)
-          {
-            
-           
-            
-            int n=arrfloat.Length;
-            float b;
-            float[] arr2=new float[n-1];
-
-            for(int i=0;i<n-1;i++)
-            {
-                arr2[i]=arrfloat[i];
-            }
-            Console.WriteLine("Задания N-1.1.4");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrfloat);
-            b=arrfloat[n-1];
-            arrfloat=arr2;
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrfloat);
-            return b;           
-          
-          }
-           public static decimal Pop(ref decimal[] arrdecimal)
-          {
-            int n=arrdecimal.Length;
-            decimal b;
-            decimal[] arr2=new decimal[n-1];
-
-            for(int i=0;i<n-1;i++)
-            {
-                arr2[i]=arrdecimal[i];
-            }
-            Console.WriteLine("Задания N-1.1.5");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdecimal);
-            b=arrdecimal[n-1];
-            arrdecimal=arr2;
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrdecimal);
-            return b;           
-          
-          }
-        public static int Push(ref int[] arrint, int element) 
-        {
-            int n=arrint.Length;
-            int [] arr2=new int[n+1];
-            for(int i=0;i<n;i++)
-            {
-                arr2[i]=arrint[i];
-            }
-            arr2[n]=element;
-            Console.WriteLine("Задания N-1.2.1");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrint);
-            Console.WriteLine("Массив после изменения ");
-            arrint=arr2;
-            getinfo(arrint);
-           return n+1;
-          
-        }     
        
-         public static int Push(ref string[] arrstring, string element) 
-        {
-             int n=arrstring.Length;
-             string [] arr2=new string[n+1];
-            for(int i=0;i<n;i++)
+        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+      
+        string[] s2=new string[]{"Firstname:","Lastname:","Middlename:","BirthDate:","Date of issue:","Date of expire:","Document №:","Addres:","Marital status","Pol","login","Parol"};
+        
+        string[] S= new string[]{};
+        string s1="";
+        Array.Resize(ref S,12);
+        int t=0,k=0;
+        for(int i=0;i<10;i++)
+        { 
+            t=0;
+            while(t!=1)
             {
-                arr2[i]=arrstring[i];
+            Console.WriteLine($"Выводите {s2[i]}");
+            s1=Console.ReadLine();
+            if(string.IsNullOrWhiteSpace(s1))
+            {
+             Console.WriteLine("Этот поля не должно быть пустым");
             }
-            arr2[n]=element; 
-            Console.WriteLine("Задания N-1.2.2");
-            Console.WriteLine("Массив до изменения "); 
-            getinfo(arrstring);
-            Console.WriteLine("Массив после изменения ");
-            arrstring=arr2;
-            getinfo(arrstring);
-            return n+1;
-
-        }     
-          public static int Push(ref double[] arrdouble, double element) 
-        {
-            Console.WriteLine("Задания N-1.2.3");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdouble);
-            int n=arrdouble.Length;
-            Array.Resize(ref arrdouble,11);
-            arrdouble[n]=element;
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrdouble);
-            return n+1; 
-        }   
-          public static int Push(ref decimal[] arrdecimal, decimal element) 
-        {
-            Console.WriteLine("Задания N-1.2.4");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdecimal);
-            int n=arrdecimal.Length;
-            Array.Resize(ref arrdecimal,11);
-            arrdecimal[n]=element;
-            Console.WriteLine("Массив после изменения ");
-            getinfo(arrdecimal);
-            return n+1; 
-        }   
-         
-        public static int Push(ref float[] arrfloat, float element) 
-        {
-            Console.WriteLine("Задания N-1.2.5");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrfloat);
-            int n=arrfloat.Length;
-            Array.Resize(ref arrfloat,11);
-            Console.WriteLine("Массив после изменения ");
-            arrfloat[n]=element;
-            getinfo(arrfloat);
-
-            return n+1; 
-        }   
-         
-        public static int Shift(ref int[] arrint)
-        {
-            Console.WriteLine("Задания N-1.3.1");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrint);
-          int n=arrint.Length,a=arrint[0];
-          Array.Reverse(arrint);
-          Array.Resize(ref arrint, n-1);
-          Array.Reverse(arrint);
-          Console.WriteLine("Массив после изменения ");
-          getinfo(arrint);
-          return a;
-
+            else
+            {
+              t=1;
+              S[i]=s1;
+            }
+            }
         }
-         public static string Shift(ref string[] arrstring)
-        {
-             Console.WriteLine("Задания N-1.3.2");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrstring);
-          int n=arrstring.Length;
-          string a=arrstring[0];
-          Array.Reverse(arrstring);
-          Array.Resize(ref arrstring, n-1);
-          Array.Reverse(arrstring);
-          Console.WriteLine("Массив после изменения ");
-          getinfo(arrstring);
-          return a;
-        }
-        public static double Shift(ref double[] arrdouble)
-        {
-             Console.WriteLine("Задания N-1.3.3");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdouble);
-          int n=arrdouble.Length;
-          double a=arrdouble[0];
-          Array.Reverse(arrdouble);
-          Array.Resize(ref arrdouble, n-1);
-          Array.Reverse(arrdouble);
-          Console.WriteLine("Массив после изменения ");
-          getinfo(arrdouble);
-          return a;
 
-        }
-        public static float Shift(ref float[] arrfloat)
+        t=0;
+        while(t!=1)
         {
-             Console.WriteLine("Задания N-1.3.4");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrfloat);
-          int n=arrfloat.Length;
-          float a=arrfloat[0];
-          Array.Reverse(arrfloat);
-          Array.Resize(ref arrfloat, n-1);
-          Array.Reverse(arrfloat);
-          Console.WriteLine("Массив после изменения ");
-          getinfo(arrfloat);
-          return a;
-
-        }
-        public static decimal Shift(ref decimal[] arrdecimal)
+        con.Open();
+        string selectParol="Select * from Registraciya";
+        SqlCommand commandText1=new SqlCommand(selectParol,con);
+        SqlDataReader reader=commandText1.ExecuteReader();
+        string n="";
+        Console.WriteLine($"Выводите {s2[10]}");
+        n=Console.ReadLine();
+        k=0;
+        while(reader.Read())
         {
-             Console.WriteLine("Задания N-1.3.5");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdecimal);
-          int n=arrdecimal.Length;
-          decimal a=arrdecimal[0];
-          Array.Reverse(arrdecimal);
-          Array.Resize(ref arrdecimal, n-1);
-          Array.Reverse(arrdecimal);
-          Console.WriteLine("Массив после изменения ");
-          getinfo(arrdecimal);
-          return a;
-
+            
+          if(Convert.ToString(reader.GetValue("login"))==n)
+            {
+             k=1;
+            }
         }
- 
-         public static int UnShift(ref int[] arrint, int element)
+        if(k!=1)
+        {
+          S[10]=n; 
+          t=1; 
+        }
+        else
+        {
+         Console.WriteLine("Такой Login уже существуеть");
+        }
+          con.Close();
+        } 
+        Console.WriteLine($"Введите {s2[11]}");
+        S[11]=Console.ReadLine();       
+
+        
+        con.Open();
+        string  insertSql=$"insert into Registraciya([Firstname],[Lastname],[Middlename],[BirthDate],[Date of issue],[Date of expire],[Docunent №],[Address],[Marital status],[Pol],[login],[Parol]) Values('{S[0]}','{S[1]}','{S[2]}','{S[3]}','{S[4]}','{S[5]}','{S[6]}','{S[7]}','{S[8]}','{S[9]}','{S[10]}','{S[11]}')";
+        SqlCommand commandText=new SqlCommand(insertSql,con);
+        var result = commandText.ExecuteNonQuery(); 
+        
+        con.Close();
+        Console.WriteLine("Вы успешно регистрировались");
+        t=0;
+        while(t!=1)
+        {
+         Console.WriteLine("Если хотите заполнить анкету для кредита нажмите 1");
+         if(Console.ReadLine()=="1")
          {
-              Console.WriteLine("Задания N-1.4.1");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrint);
-           int n=arrint.Length;
-           Array.Reverse(arrint);
-           Array.Resize(ref arrint,n+1);
-           arrint[n]=element;
-           Array.Reverse(arrint);
-           Console.WriteLine("Массив после изменения ");
-           getinfo(arrint);
-           return n+1;
+          Anceta();
+          t=1;
+         }
+         else
+         Console.WriteLine("Пажалуйста Введите правилно то что требуется");
         }
-        public static int UnShift(ref string[] arrstring, string element)
-         {
-              Console.WriteLine("Задания N-1.4.2");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrstring);
-           int n=arrstring.Length;
-           Array.Reverse(arrstring);
-           Array.Resize(ref arrstring,n+1);
-           arrstring[n]=element;
-           Array.Reverse(arrstring);
-           Console.WriteLine("Массив после изменения ");
-           getinfo(arrstring);
-           return n+1;
         }
-        public static int UnShift(ref double[] arrdouble, double element)
-         {
-              Console.WriteLine("Задания N-1.4.3");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdouble);
-           int n=arrdouble.Length;
-           Array.Reverse(arrdouble);
-           Array.Resize(ref arrdouble,n+1);
-           arrdouble[n]=element;
-           Array.Reverse(arrdouble);
-           Console.WriteLine("Массив после изменения ");
-           getinfo(arrdouble);
-           return n+1;
-        }
-        public static int UnShift(ref float[] arrfloat, float element)
-         {
-              Console.WriteLine("Задания N-1.4.4");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrfloat);
-           int n=arrfloat.Length;
-           Array.Reverse(arrfloat);
-           Array.Resize(ref arrfloat,n+1);
-           arrfloat[n]=element;
-           Array.Reverse(arrfloat);
-           Console.WriteLine("Массив после изменения ");
-           getinfo(arrfloat);
-           return n+1;
-        }
-      public static int UnShift(ref decimal[] arrdecimal, decimal element)
-         {
-              Console.WriteLine("Задания N-1.4.5");
-            Console.WriteLine("Массив до изменения ");
-            getinfo(arrdecimal);
-           int n=arrdecimal.Length;
-           Array.Reverse(arrdecimal);
-           Array.Resize(ref arrdecimal,n+1);
-           arrdecimal[n]=element;
-           Array.Reverse(arrdecimal);
-           Console.WriteLine("Массив после изменения ");
-           getinfo(arrdecimal);
-           return n+1;
+
+
+
+
+        static void Read()
+        {
+        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+        con.Open();
+        string selectSql = "Select * from Registraciya";
+        SqlCommand commandText = new SqlCommand(selectSql, con);
+        SqlDataReader reader = commandText.ExecuteReader();
+        while (reader.Read())
+        {
+System.Console.WriteLine($@"ID: {reader.GetValue("id")},
+            Firstname: {reader.GetValue("Firstname")},
+            LastName: {reader.GetValue("Lastname")},
+            MiddleName: {reader.GetValue("Middlename")},
+            BirthDate: {reader.GetValue("BirthDate")}, 
+            Date of issue:{reader.GetValue("Date of issue")},
+            Data of expire:{reader.GetValue("Date of expire")},
+            Document:{reader.GetValue("Docunent №")},
+            Address:{reader.GetValue("Address")},
+            Marital status:{reader.GetValue("Marital status")},
+            Pol:{reader.GetValue("Pol")},
+            login:{reader.GetValue("login")},
+            Parol:{reader.GetValue("Parol")}");
         }
         
-         public static void getinfo(int[] arr)
-          {
-              for(int i=0;i<arr.Length;i++)
-              {
-                  Console.Write($"{arr[i]} ");
-              }
-              Console.WriteLine();
-              
-          }
-           public static void getinfo(string[] arr)
-          {
-              for(int i=0;i<arr.Length;i++)
-              {
-                  Console.Write($"{arr[i]} ");
-              }
-               Console.WriteLine();
-          }
-           public static void getinfo(double[] arr)
-          {
-              for(int i=0;i<arr.Length;i++)
-              {
-                  Console.Write($"{arr[i]} ");
-              }
-               Console.WriteLine();
-          }
-           public static void getinfo(float[] arr)
-          {
-              for(int i=0;i<arr.Length;i++)
-              {
-                  Console.Write($"{arr[i]} ");
-              }
-               Console.WriteLine();
-          }
-           public static void getinfo(decimal[] arr)
-          {
-              for(int i=0;i<arr.Length;i++)
-              {
-                  Console.Write($"{arr[i]} ");
-              }
-               Console.WriteLine();
-          }
-          
+        reader.Close();
+        con.Close();
         }
+
         
+
+
+
+        static void Anceta()
+        {
+         const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
+         string[] s=new string[9]{"pol","семейное положение","возраст","гражданство","сумма кредита от общего дохода","кредитная история","просрока в кредитной истории","цель кредита ","срок кредита"};
+         string[] s1=new string[]{};///////Массив для сохранения данных заявки
+         Array.Resize(ref s1,5);
+         SqlConnection con=new SqlConnection(constring);
+         con.Open();
+         int t=0,i=0;
+
+           while(t!=1)
+           {
+            Console.WriteLine($"Выберите {s[0]}");
+            Console.WriteLine(@"выводите 1 если муж
+выводите 2 если жен");
+            string n=Console.ReadLine(); 
+    
+            
+            if(n=="1")
+            {
+              s1[i]="муж";
+              t=1;
+            }
+            if(n=="2")
+            {
+                s1[i]="жен";
+                t=1;
+            }
+            if(t!=1)
+            {
+                Console.WriteLine("Пожалуйста вывоводите то что требуется правильно");
+            }
+           }
+           
+           t=0;i++;
+           while(t!=1)
+           {
+               Console.WriteLine($"Выберите {s[1]}");
+               Console.WriteLine(@"Выводите 
+1 если холост
+2 если семянин
+3 если вразвоед
+4 если вдовец/вдова");
+               int n=Convert.ToInt32(Console.ReadLine());
+               switch(n)
+               {
+                   case 1:
+                   {
+                    s[i]="холост";
+                    t=1;
+                    break;
+                   }
+                    case 2:
+                   {
+                    s[i]="семеянин";
+                    t=1;
+                    break;
+                   }
+                    case 3:
+                   {
+                    s[i]="вразводе";
+                    t=1;
+                    break;
+                   }
+                    case 4:
+                   {
+                    s[i]="вдовец/вдова";
+                    t=1;
+                    break;
+                   }
+               }
+            if(t!=1)
+            {
+                Console.WriteLine("Пожалуйста вывоводите правильно то что требуется ");
+
+            }
+               
+           }
+           t=0;
+           int a1=0,a2=0,a3=0,a4=0;
+           Console.WriteLine("Введите возраст");
+           a1=Convert.ToInt32(Console.ReadLine());
+           t=0;
+           while(t!=1)
+           {
+           
+           Console.WriteLine(@"Введите 
+1 если  вы Гражданин Таджикистана
+2 если  вы гражданин другого государство");
+            string n=Console.ReadLine();
+            i++;
+            if(n=="1")
+            {
+                s[i]="Таджикистан";
+                t=1;
+            }
+            else{
+                s[i]="За рубежом";
+                t=1;
+            }
+            if(t!=1)
+            {
+                Console.WriteLine("Пожалуйста вводите правильно то что требуется");
+            }
+
+           }
         
-        
+        }
+        class Zayavok
+        {
+          public string cel;
+          public int summa;
+          public int srokkredita;
+
+        }
 
     }
 }
-

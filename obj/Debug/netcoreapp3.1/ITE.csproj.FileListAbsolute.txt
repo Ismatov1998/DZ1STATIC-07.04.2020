@@ -9,3 +9,12 @@ C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.AssemblyInfoInputs.cache
 C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.AssemblyInfo.cs
 C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.dll
 C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.pdb
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.csproj.CoreCompileInputs.cache
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.genruntimeconfig.cache
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\ITE\HOME12\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\ITE\HOME12\obj\Debug\netcoreapp3.1\ITE.csproj.CopyComplete
