@@ -7,8 +7,8 @@ namespace ERT
     {
          static void Main(string[] args)
         {
-         
-
+        while()
+        Registr();
         const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
         SqlConnection con = new SqlConnection(constring);
         
@@ -78,7 +78,21 @@ namespace ERT
 
         }
 
+        static void RegAdmin()
+        {
+          Console.WriteLine("Вводите Firstname");
+          string s1=Console.ReadLine();
+          Console.WriteLine("Вводите Lastname");
+          string s2=Console.ReadLine();
+          Console.WriteLine("Вводите Lastname");
+          string s3=Console.ReadLine();
+          Console.WriteLine("Вводите Login");
+          string s4=Console.ReadLine();
+          Console.WriteLine("Вводите Parol");
+          string s5=Console.ReadLine();
+          
 
+        }
 
 
         static void Registr()
