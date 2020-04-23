@@ -6,8 +6,8 @@ namespace ERT
     class Program
     {
          static void Main(string[] args)
-
         {
+      
         const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
         SqlConnection con = new SqlConnection(constring);
         
@@ -38,7 +38,7 @@ namespace ERT
               Если хотите подать заявку ");
 
               t=1;
-              Anceta();
+              Anceta(s);
              }
              
             }
@@ -52,8 +52,8 @@ namespace ERT
            }
            if(n==2)
            {
-               con.Open();
-               Registr();
+              con.Open();
+              Registr();
            }
 
         
@@ -143,7 +143,7 @@ namespace ERT
          Console.WriteLine("Если хотите заполнить анкету для кредита нажмите 1");
          if(Console.ReadLine()=="1")
          {
-          Anceta();
+          Anceta(s2[10]);
           t=1;
          }
          else
@@ -187,16 +187,27 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
 
 
 
-        static void Anceta()
+        static void Anceta(string s4)
         {
+         
          const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
-         string[] s=new string[9]{"pol","семейное положение","возраст","гражданство","сумма кредита от общего дохода","кредитная история","просрока в кредитной истории","цель кредита ","срок кредита"};
-         string[] s1=new string[]{};///////Массив для сохранения данных заявки
-         Array.Resize(ref s1,5);
-         SqlConnection con=new SqlConnection(constring);
+         SqlConnection con = new SqlConnection(constring);
          con.Open();
+         string selectParol=$"select [Docunent №] from Registraciya where login='918270280'";
+         SqlCommand commandText1=new SqlCommand(selectParol,con);
+         SqlDataReader reader=commandText1.ExecuteReader();
+         reader.Read();
+        
+         string[] s=new string[10]{"Серийный номер","пол","семейное положение","возраст","гражданство","сумма кредита от общего дохода","кредитная история","просрока в кредитной истории","цель кредита","срок кредита"};
+         string[] s1=new string[]{};///////Массив для сохранения данных Анкет;
+         /// 
+         Array.Resize(ref s1,10);
+         
+         
          int t=0,i=0;
-
+         s1[i]=Convert.ToString(reader.GetValue("Docunent №"));
+        con.Close();
+         i++;
            while(t!=1)
            {
             Console.WriteLine($"Выберите {s[0]}");
@@ -235,25 +246,25 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
                {
                    case 1:
                    {
-                    s[i]="холост";
+                    s1[i]="холост";
                     t=1;
                     break;
                    }
                     case 2:
                    {
-                    s[i]="семеянин";
+                    s1[i]="семеянин";
                     t=1;
                     break;
                    }
                     case 3:
                    {
-                    s[i]="вразводе";
+                    s1[i]="вразводе";
                     t=1;
                     break;
                    }
                     case 4:
                    {
-                    s[i]="вдовец/вдова";
+                    s1[i]="вдовец/вдова";
                     t=1;
                     break;
                    }
@@ -261,14 +272,14 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
             if(t!=1)
             {
                 Console.WriteLine("Пожалуйста вывоводите правильно то что требуется ");
-
             }
                
            }
            t=0;
-           int a1=0,a2=0,a3=0,a4=0;
+           i++;
+          //  int a1=0,a2=0,a3=0,a4=0;
            Console.WriteLine("Введите возраст");
-           a1=Convert.ToInt32(Console.ReadLine());
+           s1[i]=Console.ReadLine();
            t=0;
            while(t!=1)
            {
@@ -280,28 +291,122 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
             i++;
             if(n=="1")
             {
-                s[i]="Таджикистан";
+                s1[i]="Таджикистан";
                 t=1;
             }
             else{
-                s[i]="За рубежом";
+                s1[i]="За рубежом";
                 t=1;
             }
             if(t!=1)
             {
-                Console.WriteLine("Пожалуйста вводите правильно то что требуется");
+              Console.WriteLine("Пожалуйста вводите правильно то что требуется");
             }
 
            }
-        
-        }
-        class Zayavok
-        {
-          public string cel;
-          public int summa;
-          public int srokkredita;
+           i++;
+           int number;
+           
+         T:Console.WriteLine("Введите Сумма кредита от общего дохода в %");
+           string input=Console.ReadLine();
+           if(int.TryParse(input, out number))
+           {
+             s1[i]=input;
+           }
+           else
+           {
+             goto T;
+           }
 
+           i++;
+        T1:Console.WriteLine("Выводите кредитную историю");
+           string input1=Console.ReadLine();
+           if(int.TryParse(input1, out number))
+           {
+             s1[i]=input1;
+           }
+           else
+           {
+             goto T1;
+           }
+
+           i++;
+
+           T5:Console.WriteLine("Выводите просрока в кредитной истории");
+           string input3=Console.ReadLine();
+           if(int.TryParse(input3, out number))
+           {
+             s1[i]=input1;
+           }
+           else
+           {
+             Console.WriteLine("Непрвильно ввели число");
+             goto T5;
+           }
+
+           i++;
+         T2:Console.WriteLine(@"Цель Кредита введите
+           1 если это бытовая техника
+           2 если это ремонт
+           3 если телефон
+           4 если прочее");
+           string n1=Console.ReadLine();
+           
+           switch(n1)
+           {
+             case "1":
+             {
+              s1[i]="бытовая техника";
+              break;
+             }
+             case "2":
+             {
+              s1[i]="ремонт";
+              break;
+             }
+             case "3":
+             {
+              s1[i]=" телефон";
+              break;
+             }
+              case "4":
+              {
+              s1[i]= "прочее";
+              break;
+              }
+              default:
+              {
+               Console.WriteLine("Не правилно ввели команду повторите еще раз");
+               goto T2;
+               
+              }
+           }
+            i++;
+         T3: Console.WriteLine("Введите срок кредита");
+          string input2=Console.ReadLine();
+           if(int.TryParse(input1, out number))
+           {
+             s1[i]=input2;
+           }
+           else
+           {
+             goto T3;
+           }
+
+         con.Open();
+         string InsertAncet=$"insert into Anceta([серийный номер],[пол],[семейное положение],[возраст],[гражданство],[сумма кредита от общего дохода],[кредитная история],[просрока в кредитной истории],[цель кредита],[срок кредита]) Values('{s1[0]}','{s1[1]}','{s1[2]}','{s1[3]}','{s1[4]}','{s1[5]}','{s1[6]}','{s1[7]}','{s1[8]}','{s1[9]}')";
+         SqlCommand commandText12=new SqlCommand(InsertAncet,con);
+         var result = commandText12.ExecuteNonQuery(); 
+         con.Close();
+          
+         
         }
+       
+       static void Zayavok()
+       {
+       
+
+       }
 
     }
 }
