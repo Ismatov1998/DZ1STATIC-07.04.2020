@@ -9,7 +9,7 @@ namespace ERT
         {
          
 
-      
+       //Console.WriteLine(Calculate());
         const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
         SqlConnection con = new SqlConnection(constring);
         
@@ -43,7 +43,8 @@ namespace ERT
               Console.WriteLine("Добро пожаловать в свой личный кабинет");
               Console.WriteLine(@"
               выводите 1 чтобы подать заявку 
-              выводите 2 если хотите посмотреть свои заявки");
+              выводите 2 если хотите посмотреть свои заявки
+              выводите 3 если хотите оплатить кредита");
               string s3=Console.ReadLine();
               
             
@@ -128,7 +129,10 @@ namespace ERT
           Regist Client=new Regist(S[0],S[1],S[2],S[3],S[4],S[5],S[6],S[7],S[8],S[9],S[10],S[11]);
           Client.addRegistr();
           t=0;
-////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
           Console.WriteLine("Для дальнейший регистрации нужно запольнить анкету нажмите любую клавишу");
           Console.ReadKey();
           string[] s8=new string[]{};///////Массив для сохранения данных Анкет;
@@ -321,12 +325,18 @@ namespace ERT
            }
            Anceta p1=new Anceta(s8[0],s8[1],s8[2],s8[3],s8[4],s8[5],s8[6],s8[7],s8[8],s8[9]);
            t=0;
+           //Calculate(s8[0]);
            p1.addanceta();
-
+           if(Calculate()>11)
+           {
            Console.WriteLine("Чтобы подать заявку нужно войти вличный кабинет для этого надо нажать любую клавищу");
            Console.ReadKey();
            n="1";
            goto T22;
+           }
+           else{
+             Console.WriteLine("Извенити что мы не сможем вам заполнить заявку на кредите т.к ваш бали нехватает");
+           }
          }
          
         
@@ -654,11 +664,144 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
         con.Close();
        }
        
-       static void Calculate()
+       static int Calculate()
        {
+        int k=0;
+        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+        con.Open();
+        string selectSql = $"Select * from Anceta where [серийный номер]='904505050'";
+        SqlCommand commandText = new SqlCommand(selectSql, con);
+        SqlDataReader reader = commandText.ExecuteReader();
+        while(reader.Read())
+        {
+          if(Convert.ToString(reader.GetValue("пол"))=="муж")
+          {
+           k=k+1;
+          }
+          else{
+            k=k+2;
+          }
+
+          if(Convert.ToString(reader.GetValue("семейное положение"))=="холость" || Convert.ToString(reader.GetValue("семейное положение"))=="в разводе" )
+          {
+           k=k+1;
+          }
+          else{
+            k=k+2;
+          }
+
+          if((Convert.ToInt32(reader.GetValue("возраст"))>=26 && Convert.ToInt32(reader.GetValue("возраст"))<=35) || ((Convert.ToInt32(reader.GetValue("возраст"))>=63)))
+          {
+           k=k+1;
+          }
+          else{
+            if((Convert.ToInt32(reader.GetValue("возраст"))<=25))
+            {
+            k=k+0;
+            }
+            else
+            {
+              if((Convert.ToInt32(reader.GetValue("возраст"))>=36 && Convert.ToInt32(reader.GetValue("возраст"))<=62))
+              {
+                k=k+2;
+              }
+            }
+          }
+
+          if(Convert.ToString(reader.GetValue("гражданство"))=="Таджикистан")
+          {
+            k=k+1;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("сумма кредита от общего дохода"))<80)
+          {
+            k=k+4;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("сумма кредита от общего дохода"))>=80 && Convert.ToInt32(reader.GetValue("сумма кредита от общего дохода"))<150 )
+          {
+            k=k+3;
+          }
+          
+          if(Convert.ToInt32(reader.GetValue("сумма кредита от общего дохода"))>=150 && Convert.ToInt32(reader.GetValue("сумма кредита от общего дохода"))<250 )
+          {
+            k=k+2;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("сумма кредита от общего дохода"))>=250)
+          {
+            k=k+1;
+          }
          
+          if(Convert.ToInt32(reader.GetValue("кредитная история"))>3)
+          {
+            k=k+2;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("кредитная история"))==1 || Convert.ToInt32(reader.GetValue("кредитная история"))==2)
+          {
+            k=k+1;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("кредитная история"))==0)
+          {
+            k=k-1;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("просрока в кредитной истории"))>7)
+          {
+            k=k-3;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("просрока в кредитной истории"))>=5 && Convert.ToInt32(reader.GetValue("просрока в кредитной истории"))<=7 )
+          {
+            k=k-2;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("просрока в кредитной истории"))==4)
+          {
+            k=k-1;
+          }
+          
+          if(Convert.ToInt32(reader.GetValue("просрока в кредитной истории"))<=3)
+          {
+            k=k-0;
+          }
+
+          if(Convert.ToString(reader.GetValue("цель кредита"))=="бытовая техника")
+          {
+            k=k+2;
+          }
+          
+          if(Convert.ToString(reader.GetValue("цель кредита"))=="ремонт")
+          {
+            k=k+1;
+          }
+
+          if(Convert.ToString(reader.GetValue("цель кредита"))=="телефон")
+          {
+            k=k+0;
+          }
+
+          if(Convert.ToString(reader.GetValue("цель кредита"))=="прочее")
+          {
+            k=k-1;
+          }
+
+          if(Convert.ToInt32(reader.GetValue("срок кредита"))>=12 || Convert.ToInt32(reader.GetValue("срок кредита"))<12)
+          {
+            k=k+1;
+          }
+          
+
+
+
+        }
+        reader.Close();
+        con.Close();
+        return k;
        }
-
-
+       
     }
 }
