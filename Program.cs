@@ -7,21 +7,23 @@ namespace ERT
     {
          static void Main(string[] args)
         {
-       // RegAdmin();
+         
+
       
         const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
         SqlConnection con = new SqlConnection(constring);
         
         Console.WriteLine(@"
 Если вы уже регистрированый в приложении введите 1:
-иначе чтобы регистрироваться введите 2
+иначе чтобы регистрироваться введите 2:
 Если хотите войти в качестве Admina то выводите 3:
 ");
 
-           string n=Console.ReadLine();
-           int t=0;
-           if(n=="1")
+          string n=Console.ReadLine();
+          T22:int t=0;
+        if(n=="1")
            {
+            
            while(t!=1)
            {
             con.Open();
@@ -40,23 +42,21 @@ namespace ERT
               t=1;
               Console.WriteLine("Добро пожаловать в свой личный кабинет");
               Console.WriteLine(@"
-              выводите 1 Если хотите Заполнить  свою анкету
-              выводите 2 Если хотите подать заявку 
-              выводите 3 если хотите посмотреть свои заявки");
+              выводите 1 чтобы подать заявку 
+              выводите 2 если хотите посмотреть свои заявки");
               string s3=Console.ReadLine();
-              if(s3=="1")
-              {
-               Anceta(s);
-              }
-              if(s3=="2")
-              {
-                Zayavka(s);
-              } 
-              if(s3=="3")
-              {
-                ProsmotrZayavka(s);
-              }
-             }
+              
+            
+            if(s3=="1")
+            {
+              Zayavka(s);
+            } 
+            if(s3=="2")
+            {
+              ProsmotrZayavka(s);
+            }
+
+            }
              
             }
             if(t==0)
@@ -64,102 +64,22 @@ namespace ERT
                 Console.WriteLine("Вы неправильно ввели Parol или Login");
             }
             con.Close();
-           
+            
            }
            }
-           if(n=="2")
+           if(n=="2")///////// Здесь заполняем поля для регистрации
            {
-             // con.Open();
-              Registr();
-           }
-           string s5="", s6="";
-           t=0;
-           if(n=="3")
-           {
-             T1:Console.WriteLine("Введите Login:");
-             s5=Console.ReadLine();
-             Console.WriteLine("Введите Parol:");
-             s6=Console.ReadLine();
-             con.Open();
-             string selectParol="Select * from Admin1";
-             SqlCommand commandText1=new SqlCommand(selectParol,con);
-             SqlDataReader reader=commandText1.ExecuteReader();
-             while(reader.Read())
-             {
-               if(Convert.ToString(reader.GetValue("login"))==s5 && Convert.ToString(reader.GetValue("Parol"))==s6)
-               {
-                t=1; 
-                Console.WriteLine("Добро пожаловать в личный кабинет Админа");
-                Console.WriteLine("Если хотите посмотреть заявок всех клиентов выводите 1");
-                if(Console.ReadLine()=="1")
-                {
-                  ProsmotrZayavkaAdmin();
-                }
-
-               }
-               
-             }
-             if(t==1)
-             {
-
-             }
-             else {
-              Console.WriteLine("Не правильный Parol или Login");
-              con.Close();
-             goto T1;
-             }
-           }
-           
-         
-        
-        
-
-        }
-
-        static void RegAdmin()
-        {
-          const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
-          SqlConnection con = new SqlConnection(constring);
-          con.Open();
-      
-          Console.WriteLine("Вводите Firstname");
-          string s1=Console.ReadLine();
-          Console.WriteLine("Вводите Lastname");
-          string s2=Console.ReadLine();
-          Console.WriteLine("Вводите Lastname");
-          string s3=Console.ReadLine();
-          Console.WriteLine("Вводите Login");
-          string s4=Console.ReadLine();
-          Console.WriteLine("Вводите Parol");
-          string s5=Console.ReadLine();
-          string InsertZayavka=$"insert into Admin1([Firstname],[LastName],[Middlename],[Login],[Parol]) Values('{s1}','{s2}','{s3}','{s4}','{s5}')";
-          SqlCommand commandText12=new SqlCommand(InsertZayavka,con);
-          var result = commandText12.ExecuteNonQuery(); 
-          con.Close();
-
-
-
-        }
-
-
-        static void Registr()
-        {
-       
-        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
-        SqlConnection con = new SqlConnection(constring);
-      
-        string[] s2=new string[]{"Firstname:","Lastname:","Middlename:","BirthDate:","Date of issue:","Date of expire:","Document №:","Addres:","Marital status","Pol","login","Parol"};
-        
-        string[] S= new string[]{};
-        string s1="";
-        Array.Resize(ref S,12);
-        int t=0,k=0;
-        for(int i=0;i<10;i++)
-        { 
-            t=0;
-            while(t!=1)
+            string[] s2=new string[]{"Firstname:","Lastname:","Middlename:","BirthDate:","Date of issue:","Date of expire:","Document №:","Addres:","Marital status","Pol","login","Parol"};
+            string[] S= new string[]{};
+            string s1="";
+            Array.Resize(ref S,12);
+            int t1=0,k=0;
+            for(int j=0;j<10;j++)
+            { 
+            t1=0;
+            while(t1!=1)
             {
-            Console.WriteLine($"Выводите {s2[i]}");
+            Console.WriteLine($"Выводите {s2[j]}");
             s1=Console.ReadLine();
             if(string.IsNullOrWhiteSpace(s1))
             {
@@ -167,219 +87,150 @@ namespace ERT
             }
             else
             {
-              t=1;
-              S[i]=s1;
+              t1=1;
+              S[j]=s1;
             }
             }
-        }
-
-        t=0;
-        while(t!=1)
-        {
-        con.Open();
-        string selectParol="Select * from Registraciya";
-        SqlCommand commandText1=new SqlCommand(selectParol,con);
-        SqlDataReader reader=commandText1.ExecuteReader();
-        string n="";
-        Console.WriteLine($"Выводите {s2[10]}");
-        n=Console.ReadLine();
-        k=0;
-        while(reader.Read())
-        {
+            }
+         
+           t1=0;
+           while(t1!=1)
+           {
+            con.Open();
+            string selectParol="Select * from Registraciya";
+            SqlCommand commandText1=new SqlCommand(selectParol,con);
+            SqlDataReader reader=commandText1.ExecuteReader();
+            string n13="";
+            Console.WriteLine($"Выводите {s2[10]}");
+            n13=Console.ReadLine();
+            k=0;
+            while(reader.Read())
+           {
             
-          if(Convert.ToString(reader.GetValue("login"))==n)
+            if(Convert.ToString(reader.GetValue("login"))==n13)
             {
              k=1;
-            }
-        }
-        if(k!=1)
-        {
-          S[10]=n; 
-          t=1; 
-        }
-        else
-        {
-         Console.WriteLine("Такой Login уже существуеть");
-        }
-          con.Close();
-        } 
-        Console.WriteLine($"Введите {s2[11]}");
-        S[11]=Console.ReadLine();       
-
-        
-        con.Open();
-        string  insertSql=$"insert into Registraciya([Firstname],[Lastname],[Middlename],[BirthDate],[Date of issue],[Date of expire],[Docunent №],[Address],[Marital status],[Pol],[login],[Parol]) Values('{S[0]}','{S[1]}','{S[2]}','{S[3]}','{S[4]}','{S[5]}','{S[6]}','{S[7]}','{S[8]}','{S[9]}','{S[10]}','{S[11]}')";
-        SqlCommand commandText=new SqlCommand(insertSql,con);
-        var result = commandText.ExecuteNonQuery(); 
-        
-        con.Close();
-        Console.WriteLine("Вы успешно регистрировались");
-        t=0;
-        while(t!=1)
-        {
-         Console.WriteLine("Если хотите заполнить анкету для кредита нажмите 1");
-         if(Console.ReadLine()=="1")
-         {
-          Anceta(s2[10]);
-          t=1;
-         }
-         else
-         Console.WriteLine("Пажалуйста Введите правилно то что требуется");
-        }
-        }
-
-
-
-
-        static void Read()
-        {
-        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
-        SqlConnection con = new SqlConnection(constring);
-        con.Open();
-        string selectSql = "Select * from Registraciya";
-        SqlCommand commandText = new SqlCommand(selectSql, con);
-        SqlDataReader reader = commandText.ExecuteReader();
-        while (reader.Read())
-        {
-System.Console.WriteLine($@"ID: {reader.GetValue("id")},
-            Firstname: {reader.GetValue("Firstname")},
-            LastName: {reader.GetValue("Lastname")},
-            MiddleName: {reader.GetValue("Middlename")},
-            BirthDate: {reader.GetValue("BirthDate")}, 
-            Date of issue:{reader.GetValue("Date of issue")},
-            Data of expire:{reader.GetValue("Date of expire")},
-            Document:{reader.GetValue("Docunent №")},
-            Address:{reader.GetValue("Address")},
-            Marital status:{reader.GetValue("Marital status")},
-            Pol:{reader.GetValue("Pol")},
-            login:{reader.GetValue("login")},
-            Parol:{reader.GetValue("Parol")}");
-        }
-        
-        reader.Close();
-        con.Close();
-        }
-
-        
-
-
-
-        static void Anceta(string s4)
-        {
-         const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
-         SqlConnection con = new SqlConnection(constring);
-         con.Open();
-        //  string selectParol=$"select [Docunent №] from Registraciya where login='918270280'";
-        //  SqlCommand commandText1=new SqlCommand(selectParol,con);
-        //  SqlDataReader reader=commandText1.ExecuteReader();
-        //  reader.Read();
-        
-         string[] s=new string[10]{"Серийный номер","пол","семейное положение","возраст","гражданство","сумма кредита от общего дохода","кредитная история","просрока в кредитной истории","цель кредита","срок кредита"};
-         string[] s1=new string[]{};///////Массив для сохранения данных Анкет;
-         /// 
-         Array.Resize(ref s1,10);
-         
-         
-         int t=0,i=0;
-         s1[i]=s4;
-        con.Close();
-         i++;
-           while(t!=1)
-           {
-            Console.WriteLine($"Выберите {s[0]}");
-            Console.WriteLine(@"выводите 1 если муж
-выводите 2 если жен");
-            string n=Console.ReadLine(); 
-    
-            
-            if(n=="1")
-            {
-              s1[i]="муж";
-              t=1;
-            }
-            if(n=="2")
-            {
-                s1[i]="жен";
-                t=1;
-            }
-            if(t!=1)
-            {
-                Console.WriteLine("Пожалуйста вывоводите то что требуется правильно");
-            }
+             }
            }
-           
-           t=0;i++;
-           while(t!=1)
+           if(k!=1)
            {
-               Console.WriteLine($"Выберите {s[1]}");
+            S[10]=n13; 
+           t1=1; 
+           }
+          else
+          {
+          Console.WriteLine("Такой Login уже существуеть");
+          }
+          con.Close();
+          } 
+          Console.WriteLine($"Введите {s2[11]}");
+          S[11]=Console.ReadLine();
+          Regist Client=new Regist(S[0],S[1],S[2],S[3],S[4],S[5],S[6],S[7],S[8],S[9],S[10],S[11]);
+          Client.addRegistr();
+          t=0;
+////////////////////////////////////////////////////////////////
+          Console.WriteLine("Для дальнейший регистрации нужно запольнить анкету нажмите любую клавишу");
+          Console.ReadKey();
+          string[] s8=new string[]{};///////Массив для сохранения данных Анкет;
+              string n12;
+              Array.Resize(ref s8,10);
+              int i=0;
+              t=0;
+              s8[i]=S[10];
+            // con.Close();
+              i++;
+             
+             T20: Console.WriteLine($"Выберите пол");
+              Console.WriteLine(@"выводите 1 если муж
+выводите 2 если жен");
+             
+              n12=Console.ReadLine();
+              switch(n12)
+              {
+                case "1":
+                s8[i]="муж";
+                break;
+                case "":
+                s8[i]="жен";
+                break;
+                default:
+                {
+                  Console.WriteLine("Неверная команда повторите пожалуйста еще раз");
+                  goto T20;
+                }
+              }
+            
+           
+            i++;
+            
+            
+               T10:Console.WriteLine("Выберите Семейное положение");
                Console.WriteLine(@"Выводите 
 1 если холост
 2 если семянин
 3 если вразвоед
 4 если вдовец/вдова");
-               int n=Convert.ToInt32(Console.ReadLine());
-               switch(n)
+               n12=Console.ReadLine();
+               switch(n12)
                {
-                   case 1:
+                   case "1":
                    {
-                    s1[i]="холост";
-                    t=1;
+                    s8[i]="холост";
                     break;
                    }
-                    case 2:
+                    case "2":
                    {
-                    s1[i]="семеянин";
-                    t=1;
+                    s8[i]="семеянин";
                     break;
                    }
-                    case 3:
+                    case "3":
                    {
-                    s1[i]="вразводе";
-                    t=1;
+                    s8[i]="вразводе";
                     break;
                    }
-                    case 4:
+                    case "4":
                    {
-                    s1[i]="вдовец/вдова";
-                    t=1;
+                    s8[i]="вдовец/вдова";
                     break;
+                   }
+                   default:
+                   {
+                    Console.WriteLine("Пожалуйста вывоводите правильно то что требуется ");
+                    goto T10;
                    }
                }
-            if(t!=1)
-            {
-                Console.WriteLine("Пожалуйста вывоводите правильно то что требуется ");
-            }
+          
+                
+            
                
-           }
+           
            t=0;
            i++;
-          //  int a1=0,a2=0,a3=0,a4=0;
            Console.WriteLine("Введите возраст");
-           s1[i]=Console.ReadLine();
-           t=0;
-           while(t!=1)
-           {
+           s8[i]=Console.ReadLine();
+    
            
-           Console.WriteLine(@"Введите 
+          T11: Console.WriteLine(@"Введите 
 1 если  вы Гражданин Таджикистана
 2 если  вы гражданин другого государство");
-            string n=Console.ReadLine();
+            n12=Console.ReadLine();
             i++;
-            if(n=="1")
+            switch(n12)
             {
-                s1[i]="Таджикистан";
-                t=1;
+              case "1":
+                s8[i]="Таджикистан";
+                break;
+              case "2":
+              s8[i]="Таджикистан";
+              break;
+              default:
+              {
+                Console.WriteLine("Пожалуйста введите правильно то что требуется");
+                goto T11;
+              }
+               
             }
-            else{
-                s1[i]="За рубежом";
-                t=1;
-            }
-            if(t!=1)
-            {
-              Console.WriteLine("Пожалуйста вводите правильно то что требуется");
-            }
-
-           }
+           
            i++;
            int number;
            
@@ -387,7 +238,7 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
            string input=Console.ReadLine();
            if(int.TryParse(input, out number))
            {
-             s1[i]=input;
+             s8[i]=input;
            }
            else
            {
@@ -399,7 +250,7 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
            string input1=Console.ReadLine();
            if(int.TryParse(input1, out number))
            {
-             s1[i]=input1;
+             s8[i]=input1;
            }
            else
            {
@@ -412,7 +263,7 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
            string input3=Console.ReadLine();
            if(int.TryParse(input3, out number))
            {
-             s1[i]=input1;
+             s8[i]=input1;
            }
            else
            {
@@ -432,22 +283,22 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
            {
              case "1":
              {
-              s1[i]="бытовая техника";
+              s8[i]="бытовая техника";
               break;
              }
              case "2":
              {
-              s1[i]="ремонт";
+              s8[i]="ремонт";
               break;
              }
              case "3":
              {
-              s1[i]=" телефон";
+              s8[i]=" телефон";
               break;
              }
               case "4":
               {
-              s1[i]= "прочее";
+              s8[i]= "прочее";
               break;
               }
               default:
@@ -462,20 +313,239 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
           string input2=Console.ReadLine();
            if(int.TryParse(input1, out number))
            {
-             s1[i]=input2;
+             s8[i]=input2;
            }
            else
            {
              goto T3;
            }
- 
+           Anceta p1=new Anceta(s8[0],s8[1],s8[2],s8[3],s8[4],s8[5],s8[6],s8[7],s8[8],s8[9]);
+           t=0;
+           p1.addanceta();
+
+           Console.WriteLine("Чтобы подать заявку нужно войти вличный кабинет для этого надо нажать любую клавищу");
+           Console.ReadKey();
+           n="1";
+           goto T22;
+         }
+         
+        
+         
+       
+
+        
+
+
+
+           string s5="", s6="";
+           t=0;
+           if(n=="3")
+           {
+             T1:Console.WriteLine("Введите Login:");
+             s5=Console.ReadLine();
+             Console.WriteLine("Введите Parol:");
+             s6=Console.ReadLine();
+             con.Open();
+             string selectParol="Select * from Admin1";
+             SqlCommand commandText1=new SqlCommand(selectParol,con);
+             SqlDataReader reader=commandText1.ExecuteReader();
+             
+             while(reader.Read())
+             {
+               if(Convert.ToString(reader.GetValue("login"))==s5 && Convert.ToString(reader.GetValue("Parol"))==s6)
+               {
+                t=1; 
+                Console.WriteLine("Добро пожаловать в личный кабинет Админа");
+                Console.WriteLine("Если хотите посмотреть заявок всех клиентов выводите 1");
+                Console.WriteLine("Если хотите добавить Админа введите 2");
+                n=Console.ReadLine();
+                reader.Close();
+                con.Close();
+                if(n=="1")
+                {
+                  ProsmotrZayavkaAdmin();
+                }
+                if(n=="2")/////////////////////
+                {
+                 
+
+                 Console.WriteLine("Вводите Firstname");
+                 string s1=Console.ReadLine();
+                 Console.WriteLine("Вводите Lastname");
+                 string s2=Console.ReadLine();
+                 Console.WriteLine("Вводите Middlename");
+                 string s3=Console.ReadLine();
+                 T9: Console.WriteLine("Вводите Login");
+                 string s4=Console.ReadLine();
+                 con.Open();
+                 string SelectAdmin1=$"select Login from Admin1";
+                 SqlCommand commandText13=new SqlCommand(SelectAdmin1,con);
+                 reader=commandText13.ExecuteReader();
+                 while(reader.Read())
+                {
+           
+                if(Convert.ToString(reader.GetValue("Login"))==s4)
+                {
+                Console.WriteLine("Такой Login уже существует");
+                con.Close();
+                goto T9;
+                }
+                }
+              
+                con.Close();
+                
+                Console.WriteLine("Вводите Parol");
+                string s51=Console.ReadLine();
+                
+                Admin1 p=new Admin1(s1,s2,s3,s4,s51);
+                p.addAdmin();
+                goto T12;
+                }
+
+              }
+            }
+            T12:
+
+            
+             if(t==1)
+             {
+              
+             }
+             else 
+             {
+              Console.WriteLine("Не правильный Parol или Login");
+              reader.Close();
+              con.Close();
+              goto T1;
+             }
+             
+           }
+           
+           
+         
+        
+        
+
+        }
+
+        class Admin1
+        {
+          public String Firstname;
+          public string Lastname;
+          public string MiddleName;
+          public string Login;
+          public string Parol;
+          public Admin1(string Firstname,string Lastname,string MiddleName,string Login,string Parol)
+          {
+            this.Firstname=Firstname;
+            this.Lastname=Lastname;
+            this.MiddleName=MiddleName;
+            this.Login=Login;
+            this.Parol=Parol;
+          }
+          public void addAdmin()
+          {
+            
+          const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
+          SqlConnection con = new SqlConnection(constring);   
+          con.Open(); 
+          string InsertZayavka=$"insert into Admin1([Firstname],[LastName],[Middlename],[Login],[Parol]) Values('{Firstname}','{Lastname}','{MiddleName}','{Login}','{Parol}')";
+          SqlCommand commandText12=new SqlCommand(InsertZayavka,con);
+          var result = commandText12.ExecuteNonQuery(); 
+          con.Close();
+          }
+        }
+
+        class Regist
+        {
+          public string Firstname;
+          public string Lastname;
+          public string Middlename;
+          public string BirthDate;
+          public string Dataofissue;
+          public string Dataofexpire;
+          public string DocumentN;
+          public string Addres;
+          public string Maritalstatus;
+          public string Pol;
+          public string Login;
+          public string Parol;
+          public Regist(string Firstname,string Lastname,string Middlename,string BirthDate, string Dataofissue,string Dataofexpire,string DocumentN,string Addres, string Maritalstatus,string Pol,string Login,string Parol)
+          {
+            this.Firstname=Firstname;
+            this.Lastname=Lastname;
+            this.Middlename=Middlename;
+            this.BirthDate=BirthDate;
+            this.Dataofexpire=Dataofissue;
+            this.Dataofexpire=Dataofexpire;
+            this.DocumentN=DocumentN;
+            this.Addres=Addres;
+            this.Maritalstatus=Maritalstatus;
+            this.Pol=Pol;
+            this.Login=Login;
+            this.Parol=Parol;
+
+          }
+        public void addRegistr()
+        {
+        int t=0;
+        const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+        con.Open();
+
+        string  insertSql=$"insert into Registraciya([Firstname],[Lastname],[Middlename],[BirthDate],[Date of issue],[Date of expire],[Docunent №],[Address],[Marital status],[Pol],[login],[Parol]) Values('{Firstname}','{Lastname}','{Middlename}','{BirthDate}','{Dataofissue}','{Dataofexpire}','{DocumentN}','{Addres}','{Maritalstatus}','{Pol}','{Login}','{Parol}')";
+        SqlCommand commandText=new SqlCommand(insertSql,con);
+        var result = commandText.ExecuteNonQuery(); 
+        con.Close();
+        Console.WriteLine("Вы успешно регистрировались");
+        
+        }
+        }
+
+
+
+       
+
+        
+
+
+        class Anceta
+        {
+          public string DocumentN;
+          public string Pol;
+          public string Semeynoepolozh;
+          public string Voz;
+          public string Grazhdanstvo;
+          public string summak;
+          public string kreditistory;
+          public string prosroka;
+          public string celk;
+          public string srokk;
+
+        public Anceta(string DocumentN,string Pol,string Semeynoepolozh,string Voz,string Grazhdanstvo,string summak,string kreditistory,string prosroka,string celk,string srokk)
+        {
+         this.DocumentN=DocumentN;
+         this.Pol=Pol;
+         this.Semeynoepolozh=Semeynoepolozh;
+         this.Voz=Voz;
+         this.Grazhdanstvo=Grazhdanstvo;
+         this.summak=summak;
+         this.kreditistory=kreditistory;
+         this.prosroka=prosroka;
+         this.celk=celk;
+         this.srokk=srokk;
+        }
+        public void addanceta()
+        {
+         const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
+         SqlConnection con = new SqlConnection(constring);
          con.Open();
-         string InsertAncet=$"insert into Anceta([серийный номер],[пол],[семейное положение],[возраст],[гражданство],[сумма кредита от общего дохода],[кредитная история],[просрока в кредитной истории],[цель кредита],[срок кредита]) Values('{s1[0]}','{s1[1]}','{s1[2]}','{s1[3]}','{s1[4]}','{s1[5]}','{s1[6]}','{s1[7]}','{s1[8]}','{s1[9]}')";
+         string InsertAncet=$"insert into Anceta([серийный номер],[пол],[семейное положение],[возраст],[гражданство],[сумма кредита от общего дохода],[кредитная история],[просрока в кредитной истории],[цель кредита],[срок кредита]) Values('{DocumentN}','{Pol}','{Semeynoepolozh}','{Voz}','{Grazhdanstvo}','{summak}','{kreditistory}','{prosroka}','{celk}','{srokk}')";
          SqlCommand commandText12=new SqlCommand(InsertAncet,con);
          var result = commandText12.ExecuteNonQuery(); 
-         con.Close();
-          
-         
+         con.Close();  
+         Console.WriteLine("Успешно заполнили анкету");
+        }
         }
        
      static void Zayavka(string s)
@@ -538,6 +608,8 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
       var result = commandText12.ExecuteNonQuery(); 
       con.Close();
       }
+
+
       static void ProsmotrZayavka(string s)
       {
 
@@ -580,8 +652,13 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
         }
         reader.Close();
         con.Close();
-        
-        }
+       }
+       
+       static void Calculate()
+       {
+         
+       }
+
 
     }
 }
