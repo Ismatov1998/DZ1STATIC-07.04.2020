@@ -7,13 +7,16 @@ namespace ERT
     {
          static void Main(string[] args)
         {
-      
+         
+
         const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
         SqlConnection con = new SqlConnection(constring);
         
         Console.WriteLine(@"
+
 Если вы уже регистрированый в приложении введите 1:
-иначе чтобы регистрироваться введите 2");
+иначе чтобы регистрироваться введите 2
+");
 
            int n=Convert.ToInt32(Console.ReadLine()),t=0;
            if(n==1)
@@ -33,12 +36,25 @@ namespace ERT
                 
              if(Convert.ToString(reader.GetValue("login"))==s && Convert.ToString(reader.GetValue("Parol"))==s1)
              {
-              Console.WriteLine("Добро пожаловать в свой личный кабинет");
-              Console.WriteLine(@"Если хотите посмотреть свои заявки выводите 1
-              Если хотите подать заявку ");
-
               t=1;
-              Anceta(s);
+              Console.WriteLine("Добро пожаловать в свой личный кабинет");
+              Console.WriteLine(@"
+              выводите 1 Если хотите Заполнить  свою анкету
+              выводите 2 Если хотите подать заявку 
+              выводите 3 если хотите посмотреть свои заявки");
+              string s3=Console.ReadLine();
+              if(s3=="1")
+              {
+               Anceta(s);
+              }
+              if(s3=="2")
+              {
+                Zayavka(s);
+              } 
+              if(s3=="3")
+              {
+                ProsmotrZayavka(s);
+              }
              }
              
             }
@@ -189,14 +205,13 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
 
         static void Anceta(string s4)
         {
-         
          const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
          SqlConnection con = new SqlConnection(constring);
          con.Open();
-         string selectParol=$"select [Docunent №] from Registraciya where login='918270280'";
-         SqlCommand commandText1=new SqlCommand(selectParol,con);
-         SqlDataReader reader=commandText1.ExecuteReader();
-         reader.Read();
+        //  string selectParol=$"select [Docunent №] from Registraciya where login='918270280'";
+        //  SqlCommand commandText1=new SqlCommand(selectParol,con);
+        //  SqlDataReader reader=commandText1.ExecuteReader();
+        //  reader.Read();
         
          string[] s=new string[10]{"Серийный номер","пол","семейное положение","возраст","гражданство","сумма кредита от общего дохода","кредитная история","просрока в кредитной истории","цель кредита","срок кредита"};
          string[] s1=new string[]{};///////Массив для сохранения данных Анкет;
@@ -205,7 +220,7 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
          
          
          int t=0,i=0;
-         s1[i]=Convert.ToString(reader.GetValue("Docunent №"));
+         s1[i]=s4;
         con.Close();
          i++;
            while(t!=1)
@@ -392,7 +407,7 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
            {
              goto T3;
            }
-
+ 
          con.Open();
          string InsertAncet=$"insert into Anceta([серийный номер],[пол],[семейное положение],[возраст],[гражданство],[сумма кредита от общего дохода],[кредитная история],[просрока в кредитной истории],[цель кредита],[срок кредита]) Values('{s1[0]}','{s1[1]}','{s1[2]}','{s1[3]}','{s1[4]}','{s1[5]}','{s1[6]}','{s1[7]}','{s1[8]}','{s1[9]}')";
          SqlCommand commandText12=new SqlCommand(InsertAncet,con);
@@ -402,11 +417,88 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
          
         }
        
-       static void Zayavok()
-       {
-       
+     static void Zayavka(string s)
+     {
+      
+      T6:Console.WriteLine(@"Укажите цель, вводите 
+      1 если это бытовая техника
+      2 если это ремонт
+      3 если это телефон
+      4 если это прочее");
+      string cel=Console.ReadLine(),cel1=" ";
+      switch(cel)
+      {
+        case "1":
+        cel1="бытовая техника";
+        break;
+        case "2":
+        cel1="ремонт";
+        break;
+        case "3":
+        cel1="телефон";
+        break;
+        case "4":
+        cel1="прочее";
+        break;
+        default:
+        {
+          Console.WriteLine("Пожалуйста введите правильно то что требуется");
+          goto T6;
+        }
+      }
 
-       }
+
+      T7:Console.WriteLine("Укажите Cумму кредита");
+      string sum=Console.ReadLine();
+      int number; 
+      if(string.IsNullOrWhiteSpace(sum)==true || int.TryParse(sum, out number)==false)
+      {
+        Console.WriteLine("Этот поля не должно быть пустим и не можеть быть строкам");
+        goto T7;
+      }
+      
+
+       
+    T8:Console.WriteLine("Укажите срок кредита");
+      string srok=Console.ReadLine();
+      if(string.IsNullOrWhiteSpace(srok)==true || int.TryParse(sum, out number)==false)
+      {
+        Console.WriteLine("Этот поля не должно быть пустим");
+        goto T8;
+      }
+      
+      int srok1=Convert.ToInt32(srok),sum1=Convert.ToInt32(sum);
+ 
+      const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
+      SqlConnection con = new SqlConnection(constring);
+      con.Open();
+      string InsertZayavka=$"insert into Zayavka Values('{s}','{sum1}','{srok1}','{cel1}')";
+      SqlCommand commandText12=new SqlCommand(InsertZayavka,con);
+      var result = commandText12.ExecuteNonQuery(); 
+      con.Close();
+      }
+      static void ProsmotrZayavka(string s)
+      {
+
+      const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+        con.Open();
+        string selectSql = $"Select * from Zayavka where [серийный номер]={s}";
+        SqlCommand commandText = new SqlCommand(selectSql, con);
+        SqlDataReader reader = commandText.ExecuteReader();
+        while (reader.Read())
+        {
+System.Console.WriteLine($@"ID: {reader.GetValue("id")},
+            Firstname: {reader.GetValue("серийный номер")},
+            LastName: {reader.GetValue("сумма кредита")},
+            MiddleName: {reader.GetValue("срок кредита")},
+            BirthDate: {reader.GetValue("цель кредита")}, 
+            ");
+        }
+        reader.Close();
+        con.Close();
+        
+        }
 
     }
 }
