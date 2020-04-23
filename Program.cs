@@ -7,19 +7,20 @@ namespace ERT
     {
          static void Main(string[] args)
         {
-        while()
-        Registr();
+       // RegAdmin();
+      
         const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
         SqlConnection con = new SqlConnection(constring);
         
         Console.WriteLine(@"
-
 Если вы уже регистрированый в приложении введите 1:
 иначе чтобы регистрироваться введите 2
+Если хотите войти в качестве Admina то выводите 3:
 ");
 
-           int n=Convert.ToInt32(Console.ReadLine()),t=0;
-           if(n==1)
+           string n=Console.ReadLine();
+           int t=0;
+           if(n=="1")
            {
            while(t!=1)
            {
@@ -66,13 +67,50 @@ namespace ERT
            
            }
            }
-           if(n==2)
+           if(n=="2")
            {
-              con.Open();
+             // con.Open();
               Registr();
            }
+           string s5="", s6="";
+           t=0;
+           if(n=="3")
+           {
+             T1:Console.WriteLine("Введите Login:");
+             s5=Console.ReadLine();
+             Console.WriteLine("Введите Parol:");
+             s6=Console.ReadLine();
+             con.Open();
+             string selectParol="Select * from Admin1";
+             SqlCommand commandText1=new SqlCommand(selectParol,con);
+             SqlDataReader reader=commandText1.ExecuteReader();
+             while(reader.Read())
+             {
+               if(Convert.ToString(reader.GetValue("login"))==s5 && Convert.ToString(reader.GetValue("Parol"))==s6)
+               {
+                t=1; 
+                Console.WriteLine("Добро пожаловать в личный кабинет Админа");
+                Console.WriteLine("Если хотите посмотреть заявок всех клиентов выводите 1");
+                if(Console.ReadLine()=="1")
+                {
+                  ProsmotrZayavkaAdmin();
+                }
 
-        
+               }
+               
+             }
+             if(t==1)
+             {
+
+             }
+             else {
+              Console.WriteLine("Не правильный Parol или Login");
+              con.Close();
+             goto T1;
+             }
+           }
+           
+         
         
         
 
@@ -80,6 +118,10 @@ namespace ERT
 
         static void RegAdmin()
         {
+          const string constring=@"Data source=localhost;initial catalog=Client; Integrated Security=True";
+          SqlConnection con = new SqlConnection(constring);
+          con.Open();
+      
           Console.WriteLine("Вводите Firstname");
           string s1=Console.ReadLine();
           Console.WriteLine("Вводите Lastname");
@@ -90,7 +132,12 @@ namespace ERT
           string s4=Console.ReadLine();
           Console.WriteLine("Вводите Parol");
           string s5=Console.ReadLine();
-          
+          string InsertZayavka=$"insert into Admin1([Firstname],[LastName],[Middlename],[Login],[Parol]) Values('{s1}','{s2}','{s3}','{s4}','{s5}')";
+          SqlCommand commandText12=new SqlCommand(InsertZayavka,con);
+          var result = commandText12.ExecuteNonQuery(); 
+          con.Close();
+
+
 
         }
 
@@ -498,6 +545,28 @@ System.Console.WriteLine($@"ID: {reader.GetValue("id")},
         SqlConnection con = new SqlConnection(constring);
         con.Open();
         string selectSql = $"Select * from Zayavka where [серийный номер]={s}";
+        SqlCommand commandText = new SqlCommand(selectSql, con);
+        SqlDataReader reader = commandText.ExecuteReader();
+        while (reader.Read())
+        {
+System.Console.WriteLine($@"ID: {reader.GetValue("id")},
+            Firstname: {reader.GetValue("серийный номер")},
+            LastName: {reader.GetValue("сумма кредита")},
+            MiddleName: {reader.GetValue("срок кредита")},
+            BirthDate: {reader.GetValue("цель кредита")}, 
+            ");
+        }
+        reader.Close();
+        con.Close();
+        
+        }
+        
+      static void ProsmotrZayavkaAdmin()
+      {
+      const string constring=@"Data source=localhost; initial catalog=Client; Integrated Security=True";
+        SqlConnection con = new SqlConnection(constring);
+        con.Open();
+        string selectSql = $"Select * from Zayavka";
         SqlCommand commandText = new SqlCommand(selectSql, con);
         SqlDataReader reader = commandText.ExecuteReader();
         while (reader.Read())
